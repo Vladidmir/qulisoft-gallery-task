@@ -23,7 +23,7 @@ export const userSlice = createSlice({
       state.items = payload;
       state.status = "finished";
     });
-    builder.addCase(fetchUsers.rejected, (state, action) => {
+    builder.addCase(fetchUsers.rejected, (state) => {
       state.status = "error";
       state.items = [];
     });

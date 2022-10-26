@@ -10,8 +10,6 @@ export const s = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
-  flatList: { flex: 1, justifyContent: "space-around" },
   error: {
     fontSize: 24,
     textAlign: "center",

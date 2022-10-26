@@ -2,6 +2,8 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { Provider } from "react-redux";
@@ -16,6 +18,7 @@ export type UserStackParamList = {
 };
 
 const Stack = createNativeStackNavigator<UserStackParamList>();
+export type NavigationProps = StackNavigationProp<UserStackParamList>;
 
 export default function App() {
   return (

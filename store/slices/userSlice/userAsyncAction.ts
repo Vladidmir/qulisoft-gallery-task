@@ -1,8 +1,13 @@
 import { UserSlice } from "./index";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { UserInfo } from "../../../types";
 
+type OriginalRes = {
+  id: string;
+  user: { name: string };
+  urls: { full: string };
+};
 export const fetchUsers = createAsyncThunk<
   UserInfo[],
   undefined,
@@ -12,19 +17,13 @@ export const fetchUsers = createAsyncThunk<
 >(
   "@user/fetchUsers",
   async () => {
-    const { data } = await axios.get(
+    const { data }: AxiosResponse<OriginalRes[]> = await axios.get(
       "https://api.unsplash.com/photos/?client_id=ab3411e4ac868c2646c0ed488dfd919ef612b04c264f3374c97fff98ed253dc9"
     );
 
-    const transformData = data.map(
-      (item: {
-        id: string;
-        user: { name: string };
-        urls: { full: string };
-      }) => {
-        return { id: item.id, author: item.user.name, img: item.urls.full };
-      }
-    );
+    const transformData = data.map((item) => {
+      return { id: item.id, author: item.user.name, img: item.urls.full };
+    });
 
     return transformData;
   },

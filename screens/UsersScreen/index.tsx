@@ -1,15 +1,8 @@
 import React, { useEffect } from "react";
+import { SafeAreaView, Text, ActivityIndicator, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../store";
 
-import {
-  SafeAreaView,
-  FlatList,
-  Text,
-  ActivityIndicator,
-  View,
-} from "react-native";
-
-import UserItem from "../../components/UserItem";
+import UsersList from "../../components/UsersList";
 import { s } from "./style";
 
 import { fetchUsers } from "../../store/slices/userSlice/userAsyncAction";
@@ -17,6 +10,7 @@ import { selectUsersData } from "../../store/slices/userSlice/selectors";
 
 const UsersScreen = () => {
   const { items, status } = useAppSelector(selectUsersData);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -33,19 +27,13 @@ const UsersScreen = () => {
     </View>
   );
 
+  const content = status == "finished" && <UsersList items={items} />;
+
   return (
     <SafeAreaView style={s.root}>
       {errorMassage}
       {spinner}
-      {status == "finished" && (
-        <FlatList
-          data={items}
-          keyExtractor={(user) => user.id}
-          renderItem={({ item }) => <UserItem {...item} />}
-          columnWrapperStyle={s.flatList}
-          numColumns={2}
-        />
-      )}
+      {content}
     </SafeAreaView>
   );
 };
